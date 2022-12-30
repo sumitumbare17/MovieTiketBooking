@@ -53,7 +53,7 @@ public   Vector g = new Vector ();
          MovieData a = new MovieData();
         String seatsno =a.getBookedSeats(id);
         if(seatsno!=null){
-        seatsno= seatsno.replace('[',',').replace(']', ',');
+        seatsno= seatsno.replace('[',',').replace(']', ',').replace(' ', ',');
         arr= seatsno.split(",");
         System.out.print(arr[0]);
         }

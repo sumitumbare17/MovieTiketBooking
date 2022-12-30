@@ -6,6 +6,7 @@ package com.mycompany.movietiketbooking;
 
 import com.google.protobuf.TextFormat.ParseException;
 import java.io.FileInputStream;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -26,10 +27,7 @@ import javax.swing.JOptionPane;
  * @author sumit
  */
 public class MovieData {
-/**
- *
- * @author sumit
- */public int id;
+public int id;
     public String name;
     public String language;
     public String time;
@@ -60,9 +58,9 @@ public class MovieData {
 
 			stmt = (Statement) con.createStatement();
 
-			sql = "INSERT into movies (Name,language,time,start_date,end_date, platinum_seats ,gold_seats,silver_seats ,screen,image) VALUES(?,?,?,?,?,?,?,?,?,?)";
+			sql = "INSERT into movies (Name,language,time,start_date,end_date, platinum_seats ,gold_seats,silver_seats "
+                                + ",screen,image) VALUES(?,?,?,?,?,?,?,?,?,?)";
 			stm = con.prepareStatement(sql);
-
 			stm.setString(1, (String) e.get(0));
 			stm.setString(2, (String) e.get(1));
 			stm.setString(3, (String) e.get(2));
@@ -298,5 +296,46 @@ public class MovieData {
 
 		}
 		return b;
+	}
+               
+         public int[] getid()
+	{		
+		PreparedStatement stm = null;
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+                int ids[] =   new int [20];
+                int i=0;
+		 String sql;
+		try {
+                        
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, user, pass);
+
+			stmt = con.createStatement();
+                       
+			 sql = "select id from movies ";
+                      
+                   
+			stm = con.prepareStatement(sql);
+			rs= stm.executeQuery();
+					      
+			 while (rs.next()) 
+			 {
+			        	ids[i]  = rs.getInt(1);
+                                        i++;
+			        }
+			 System.out.print(ids);
+
+		} catch(NumberFormatException e) {
+			
+			JOptionPane.showMessageDialog(null, "Enter Only Numbers  ");
+		}
+		catch (Exception e) {
+			 System.out.print(e);
+		}
+     return ids;
+		
 	}
 }

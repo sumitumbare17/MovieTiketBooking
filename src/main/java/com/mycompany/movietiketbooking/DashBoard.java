@@ -43,14 +43,19 @@ public class DashBoard extends javax.swing.JFrame {
         this.u_id= u_id;
         initComponents();
        int count= db.rowCount();
+       int[]no= db.getid();
+     
+       System.out.print(no);
+       if(no!=null)
+       {
          jPanel1.setLayout(new GridLayout(3,3,3,3));
         for(int i=0;i<count;i++)
         {
-                db.getDetails(i+1);
+                db.getDetails(no[i]);
              JPanel b= this.Shows(db.name,db.screen,db.time,db.image,db.language,db.id);
              jPanel1.add(b);
         }
-
+       }
     }
 
     /**
